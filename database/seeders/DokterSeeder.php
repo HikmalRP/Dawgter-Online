@@ -20,6 +20,7 @@ class DokterSeeder extends Seeder
                 'alamat' => 'Jl. Dawgtor No. 123',
                 'no_hp' => '081234567890',
                 'email' => 'brando@gmail.com',
+                'id_poli' => 1, // Asumsi Poli Umum memiliki ID 1
                 'password' => Hash::make('brando@gmail.com'),
                 'role' => 'dokter',
             ],
@@ -27,8 +28,36 @@ class DokterSeeder extends Seeder
                 'nama' => 'Dr. Ambadoktor',
                 'alamat' => 'Jl. Goa Persembunyian OPM No. 456',
                 'no_hp' => '081234567891',
+                'id_poli' => 2, // Asumsi Poli Anak memiliki ID 2
                 'email' => 'ambadoktor@gmail.com',
                 'password' => Hash::make('ambadoktor@gmail.com'),
+                'role' => 'dokter',
+            ],
+            [
+                'nama' => 'Dr. Untu',
+                'alamat' => 'Jl. Nyengir No. 789',
+                'no_hp' => '081234567892',
+                'id_poli' => 3, // Asumsi Poli Gigi memiliki ID 3
+                'email' => 'untu@gmail.com',
+                'password' => Hash::make('untu@gmail.com'),
+                'role' => 'dokter',
+            ],
+            [
+                'nama' => 'Dr. Meteng',
+                'alamat' => 'Jl. Moms No. 101',
+                'no_hp' => '081234567893',
+                'id_poli' => 4, // Asumsi Poli Kandungan memiliki ID 4
+                'email' => 'meteng@gmail.com',
+                'password' => Hash::make('meteng@gmail.com'),
+                'role' => 'dokter',
+            ],
+            [
+                'nama' => 'Dr. Krungu',
+                'alamat' => 'Jl. Listen No. 102',
+                'no_hp' => '081234567894',
+                'id_poli' => 5, // Asumsi Poli THT memiliki ID 5
+                'email' => 'krungu@gmail.com',
+                'password' => Hash::make('krungu@gmail.com'),
                 'role' => 'dokter',
             ],
         ];
