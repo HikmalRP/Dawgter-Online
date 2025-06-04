@@ -18,7 +18,6 @@ class PasienSeeder extends Seeder
             [
                 'nama' => 'Andriana',
                 'alamat' => 'Jl. Barber No. 123',
-                'no_hp' => '081234567890',
                 'no_ktp' => '1234567890123456',
                 'no_hp' => '081234567890',
                 'no_rm' => '2025-06-001',
@@ -29,7 +28,6 @@ class PasienSeeder extends Seeder
             [
                 'nama' => 'Rusdiansyah',
                 'alamat' => 'Jl. Bogel No. 456',
-                'no_hp' => '081234567891',
                 'no_ktp' => '1234567890123457',
                 'no_hp' => '081234567891',
                 'no_rm' => '2025-06-002',
