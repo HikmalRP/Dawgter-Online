@@ -18,6 +18,18 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
+// Route Admin
+Route::get('/admin/dashboard', function () {
+    return view('admin.index');
+})->name('admin.dashboard')->middleware('role:admin', 'auth');
+
+Route::get('/admin/obat', [ObatController::class, 'index'])->middleware('role:admin', 'auth');
+Route::get('/admin/obat/create', [ObatController::class, 'create'])->middleware('role:admin', 'auth');
+Route::post('/admin/obat', [ObatController::class, 'store'])->middleware('role:admin', 'auth');
+Route::get('/admin/obat/{id}/edit', [ObatController::class, 'edit'])->middleware('role:admin', 'auth');
+Route::put('/admin/obat/{id}', [ObatController::class, 'update'])->middleware('role:admin', 'auth');
+Route::delete('/admin/obat/{id}', [ObatController::class, 'destroy'])->middleware('role:admin', 'auth');
+
 // Route Dokter
 Route::get('/dokter/dashboard', function () {
     return view('dokter.index');
