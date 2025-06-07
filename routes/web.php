@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KelolaDokterController;
+use App\Http\Controllers\KelolaPasienController;
+use App\Http\Controllers\KelolaPoliController;
 use App\Http\Controllers\MemeriksaController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PeriksaController;
@@ -22,6 +25,27 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::get('/admin/dashboard', function () {
     return view('admin.index');
 })->name('admin.dashboard')->middleware('role:admin', 'auth');
+
+Route::get('/admin/mengelola_dokter', [KelolaDokterController::class, 'index'])->middleware('role:admin', 'auth');
+Route::get('/admin/mengelola_dokter/create', [KelolaDokterController::class, 'create'])->middleware('role:admin', 'auth');
+Route::post('/admin/mengelola_dokter', [KelolaDokterController::class, 'store'])->middleware('role:admin', 'auth');
+Route::get('/admin/mengelola_dokter/{id}/edit', [KelolaDokterController::class, 'edit'])->middleware('role:admin', 'auth');
+Route::put('/admin/mengelola_dokter/{id}', [KelolaDokterController::class, 'update'])->middleware('role:admin', 'auth');
+Route::delete('/admin/mengelola_dokter/{id}', [KelolaDokterController::class, 'destroy'])->middleware('role:admin', 'auth');
+
+Route::get('/admin/mengelola_pasien', [KelolaPasienController::class, 'index'])->middleware('role:admin', 'auth');
+Route::get('/admin/mengelola_pasien/create', [KelolaPasienController::class, 'create'])->middleware('role:admin', 'auth');
+Route::post('/admin/mengelola_pasien', [KelolaPasienController::class, 'store'])->middleware('role:admin', 'auth');
+Route::get('/admin/mengelola_pasien/{id}/edit', [KelolaPasienController::class, 'edit'])->middleware('role:admin', 'auth');
+Route::put('/admin/mengelola_pasien/{id}', [KelolaPasienController::class, 'update'])->middleware('role:admin', 'auth');
+Route::delete('/admin/mengelola_pasien/{id}', [KelolaPasienController::class, 'destroy'])->middleware('role:admin', 'auth');
+
+Route::get('/admin/mengelola_poli', [KelolaPoliController::class, 'index'])->middleware('role:admin', 'auth');
+Route::get('/admin/mengelola_poli/create', [KelolaPoliController::class, 'create'])->middleware('role:admin', 'auth');
+Route::post('/admin/mengelola_poli', [KelolaPoliController::class, 'store'])->middleware('role:admin', 'auth');
+Route::get('/admin/mengelola_poli/{id}/edit', [KelolaPoliController::class, 'edit'])->middleware('role:admin', 'auth');
+Route::put('/admin/mengelola_poli/{id}', [KelolaPoliController::class, 'update'])->middleware('role:admin', 'auth');
+Route::delete('/admin/mengelola_poli/{id}', [KelolaPoliController::class, 'destroy'])->middleware('role:admin', 'auth');
 
 Route::get('/admin/obat', [ObatController::class, 'index'])->middleware('role:admin', 'auth');
 Route::get('/admin/obat/create', [ObatController::class, 'create'])->middleware('role:admin', 'auth');

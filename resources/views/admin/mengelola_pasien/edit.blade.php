@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title','Tambah Obat')
+@section('title','Edit Pasien')
 
 @section('nav-item')
 <li class="nav-item">
@@ -41,13 +41,13 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Obat</h1>
+        <h1 class="m-0">Pasien</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-          <li class="breadcrumb-item"><a href="/admin/obat">Obat</a></li>
-          <li class="breadcrumb-item active">Tambah Obat</li>
+          <li class="breadcrumb-item"><a href="/admin/mengelola_pasien">Pasien</a></li>
+          <li class="breadcrumb-item active">Edit Pasien</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -63,24 +63,41 @@
         <!-- general form elements -->
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Form Tambah Obat</h3>
+            <h3 class="card-title">Form Edit Pasien</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form method="post" action="/admin/obat">
+          <form method="post" action="/admin/mengelola_pasien/ {{ $pasien->id }}">
             @csrf
+            @method('put')
             <div class="card-body">
               <div class="form-group">
-                <label for="nama_obat">Nama Obat</label>
-                <input type="text" class="form-control" id="nama_obat" name="nama_obat" placeholder="Masukkan Nama Obat">
+                <label for="nama">Nama Pasien</label>
+                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama', $pasien->nama) }}">
               </div>
               <div class="form-group">
-                <label for="kemasan">Kemasan</label>
-                <input type="text" class="form-control" id="kemasan" name="kemasan" placeholder="Masukkan Kemasan Obat">
+                <label for="alamat">Alamat</label>
+                <input type="text" class="form-control" id="alamat" name="alamat" value="{{ old('alamat', $pasien->alamat) }}">
               </div>
               <div class="form-group">
-                <label for="harga">Harga</label>
-                <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga Obat">
+                <label for="no_hp">Nomor KTP</label>
+                <input type="text" class="form-control" id="no_ktp" name="no_ktp" value="{{ old('no_ktp', $pasien->no_ktp) }}">
+              </div>
+              <div class="form-group">
+                <label for="no_hp">Nomor HP</label>
+                <input type="text" class="form-control" id="no_hp" name="no_hp" value="{{ old('no_hp', $pasien->no_hp) }}">
+              </div>
+              <div class="form-group">
+                <label for="no_hp">Nomor RM</label>
+                <input type="text" class="form-control" id="no_rm" name="no_rm" value="{{ old('no_hp', $pasien->no_rm) }}" readonly>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $pasien->email) }}">
+              </div>
+              <div class="form-group">
+                <label for="password">Password <small class="text-muted">(Isi jika ingin mengganti)</small></label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Kosongkan jika tidak ingin mengubah">
               </div>
             </div>
             <!-- /.card-body -->

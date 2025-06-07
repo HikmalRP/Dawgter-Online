@@ -40,11 +40,23 @@ class AuthController extends Controller
             return redirect()->back()->withInput();
         }
 
-        // Generate no_rm otomatis
         $prefix = now()->format('Y-m'); // contoh: 2025-06
-        $count = User::where('role', 'pasien')->where('no_rm', 'like', $prefix . '%')->count() + 1;
-        $urutan = str_pad($count, 3, '0', STR_PAD_LEFT); // menjadi 001, 002, dst
-        $no_rm = $prefix . '-' . $urutan; // hasil akhir: 2025-06-001
+
+        $lastPatient = User::where('role', 'pasien')
+            ->where('no_rm', 'like', $prefix . '-%')
+            ->orderByDesc('no_rm')
+            ->first();
+
+        if ($lastPatient) {
+            // Ambil nomor urut terakhir dari no_rm, misal: 2025-06-004 → ambil '004'
+            $lastNumber = (int)substr($lastPatient->no_rm, -3);
+            $nextNumber = $lastNumber + 1;
+        } else {
+            $nextNumber = 1;
+        }
+
+        $urutan = str_pad($nextNumber, 3, '0', STR_PAD_LEFT); // hasil: 001, 002, dst
+        $no_rm = $prefix . '-' . $urutan;
 
         User::create([
             'nama' => $validatedData['nama'],

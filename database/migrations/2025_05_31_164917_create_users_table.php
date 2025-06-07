@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('alamat');
-            $table->bigInteger('no_hp');
-            $table->bigInteger('no_ktp')->nullable();
+            $table->string('no_hp');
+            $table->string('no_ktp')->nullable();
             $table->string('no_rm')->nullable();
             $table->foreignId('id_poli')->nullable()->constrained('polis')->onDelete('set null');
             $table->enum('role', ['dokter', 'pasien', 'admin']);
