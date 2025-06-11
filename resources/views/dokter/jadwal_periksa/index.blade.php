@@ -1,36 +1,36 @@
 @extends('layout.app')
 
-@section('title','Pasien')
+@section('title','Memeriksa')
 
 @section('nav-item')
 <li class="nav-item">
-  <a href="/admin/dashboard" class="nav-link">
+  <a href="/dokter/dashboard" class="nav-link">
     <i class="nav-icon fas fa-tachometer-alt"></i>
     <p>Dashboard</p>
   </a>
 </li>
 <li class="nav-item">
-  <a href="/admin/mengelola_dokter" class="nav-link">
+  <a href="/dokter/jadwal_periksa" class="nav-link">
+    <i class="nav-icon fas fa-solid fa-calendar"></i>
+    <p>Jadwal Periksa</p>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="/dokter/memeriksa" class="nav-link">
+    <i class="nav-icon fas fa-solid fa-stethoscope"></i>
+    <p>Memeriksa Pasien</p>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="/dokter/riwayat_pasien" class="nav-link">
+    <i class="nav-icon fas fa-solid fa-book-medical"></i>
+    <p>Riwayat Pasien</p>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="/dokter/profil" class="nav-link">
     <i class="nav-icon fas fa-solid fa-hospital-user"></i>
-    <p>Dokter</p>
-  </a>
-</li>
-<li class="nav-item">
-  <a href="/admin/mengelola_pasien" class="nav-link">
-    <i class="nav-icon fas fa-solid fa-bed"></i>
-    <p>Pasien</p>
-  </a>
-</li>
-<li class="nav-item">
-  <a href="/admin/mengelola_poli" class="nav-link">
-    <i class="nav-icon fas fa-solid fa-hospital"></i>
-    <p>Poli</p>
-  </a>
-</li>
-<li class="nav-item">
-  <a href="/admin/obat" class="nav-link">
-    <i class="nav-icon fas fa-solid fa-capsules"></i>
-    <p>Obat</p>
+    <p>Profil</p>
   </a>
 </li>
 @endsection
@@ -41,12 +41,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Pasien</h1>
+        <h1 class="m-0">Jadwal Periksa</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-          <li class="breadcrumb-item active">Pasien</li>
+          <li class="breadcrumb-item"><a href="/dokter/dashboard">Home</a></li>
+          <li class="breadcrumb-item active">Jadwal Periksa</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -61,12 +61,11 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Daftar Pasien</h3>
-            <a href="/admin/mengelola_pasien/create" class="btn btn-sm btn-info ml-2">Tambah Pasien</a>
+            <h3 class="card-title">Daftar Jadwal Periksa</h3>
+            <a href="/dokter/jadwal_periksa/create" class="btn btn-sm btn-info ml-2">Tambah Jadwal Periksa</a>
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
                 <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
                 <div class="input-group-append">
                   <button type="submit" class="btn btn-default">
                     <i class="fas fa-search"></i>
@@ -81,46 +80,41 @@
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nama Pasien</th>
-                  <th>Alamat</th>
-                  <th>Nomor KTP</th>
-                  <th>Nomor HP</th>
-                  <th>Nomor RM</th>
+                  <th>Nama Dokter</th>
+                  <th>Hari</th>
+                  <th>Jadwal Mulai</th>
+                  <th>Jadwal Selesai</th>
+                  <th>Status</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                @forelse ($pasiens as $pasien)
+                @forelse ($jadwal_periksas as $jadwal_periksa)
                 <tr>
                   <td>{{$loop->iteration}}</td>
-                  <td>{{$pasien->nama}}</td>
-                  <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $pasien->alamat }}">
-                    {{ $pasien->alamat }}
-                  </td>
-                  <td>{{$pasien->no_hp}}</td>
-                  <td>{{$pasien->no_ktp}}</td>
-                  <td>{{$pasien->no_rm}}</td>
+                  <td>{{$jadwal_periksa->dokter->nama}}</td>
+                  <td>{{$jadwal_periksa->hari}}</td>
+                  <td>{{$jadwal_periksa->jam_mulai}}</td>
+                  <td>{{$jadwal_periksa->jam_selesai}}</td>
+                  <td>
+                    @if ($jadwal_periksa->status == 'aktif')
+                    <span class="badge badge-success">Aktif</span>
+                    @else
+                    <span class="badge badge-danger">Tidak Aktif</span>
+                    @endif
                   <td>
                     <div class="row">
-                      <a href="/admin/mengelola_pasien/{{ $pasien->id }}/edit" class="btn btn-warning">Edit</a>
-                      <form action="/admin/mengelola_pasien/{{ $pasien->id }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" onclick="return confirm('Yakin ingin menghapus data pasien {{ $pasien->nama }}?')" class="btn btn-danger ml-2">Delete</button>
-                      </form>
+                      <a href="/dokter/jadwal_periksa/{{ $jadwal_periksa->id }}/edit" class="btn btn-warning">Edit</a>
                     </div>
                   </td>
                 </tr>
                 @empty
                 <tr>
-                  <td colspan="7" class="text-center">Tidak ada data pasien</td>
+                  <td colspan="7" class="text-center">Tidak ada jadwal periska</td>
                 </tr>
                 @endforelse
               </tbody>
             </table>
-            <div class="mt4">
-              {{ $pasiens->links() }}
-            </div>
           </div>
           <!-- /.card-body -->
         </div>

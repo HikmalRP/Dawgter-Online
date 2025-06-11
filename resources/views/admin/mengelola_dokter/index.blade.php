@@ -112,7 +112,7 @@
                 </tr>
                 @empty
                 <tr>
-                  <td colspan="5" class="text-center">Tidak ada data dokter</td>
+                  <td colspan="6" class="text-center">Tidak ada data dokter</td>
                 </tr>
                 @endforelse
               </tbody>

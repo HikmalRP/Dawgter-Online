@@ -11,11 +11,12 @@ class JadwalPeriksa extends Model
         'hari',
         'jam_mulai',
         'jam_selesai',
+        'status',
     ];
 
-    public function pasien()
+    public function dokter()
     {
-        return $this->belongsTo(User::class, 'id_pasien');
+        return $this->belongsTo(User::class, 'id_dokter');
     }
 
     public function jadwal()

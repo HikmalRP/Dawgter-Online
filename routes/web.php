@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\JadwalPeriksaController;
 use App\Http\Controllers\KelolaDokterController;
 use App\Http\Controllers\KelolaPasienController;
 use App\Http\Controllers\KelolaPoliController;
@@ -58,6 +59,12 @@ Route::delete('/admin/obat/{id}', [ObatController::class, 'destroy'])->middlewar
 Route::get('/dokter/dashboard', function () {
     return view('dokter.index');
 })->name('dokter.dashboard')->middleware('role:dokter', 'auth');
+
+Route::get('/dokter/jadwal_periksa', [JadwalPeriksaController::class, 'index'])->middleware('role:dokter', 'auth');
+Route::get('/dokter/jadwal_periksa/create', [JadwalPeriksaController::class, 'create'])->middleware('role:dokter', 'auth');
+Route::post('/dokter/jadwal_periksa', [JadwalPeriksaController::class, 'store'])->middleware('role:dokter', 'auth');
+Route::get('/dokter/jadwal_periksa/{id}/edit', [JadwalPeriksaController::class, 'edit'])->middleware('role:dokter', 'auth');
+Route::put('/dokter/jadwal_periksa/{id}', [JadwalPeriksaController::class, 'update'])->middleware('role:dokter', 'auth');
 
 Route::get('/dokter/memeriksa', [MemeriksaController::class, 'index'])->middleware('role:dokter', 'auth');
 Route::get('/dokter/memeriksa/{id}/create', [MemeriksaController::class, 'create'])->middleware('role:dokter', 'auth');
