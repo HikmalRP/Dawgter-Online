@@ -22,10 +22,16 @@ class JadwalPeriksaController extends Controller
 
     public function store(Request $req)
     {
+        // Ubah input menjadi format H:i:s
+        $req->merge([
+            'jam_mulai' => $req->jam_mulai . ':00',
+            'jam_selesai' => $req->jam_selesai . ':00',
+        ]);
+
         $req->validate([
             'hari' => 'required|string',
-            'jam_mulai' => 'required|date_format:H:i',
-            'jam_selesai' => 'required|date_format:H:i',
+            'jam_mulai' => 'required|date_format:H:i:s',
+            'jam_selesai' => 'required|date_format:H:i:s',
         ]);
 
         JadwalPeriksa::create([
@@ -47,20 +53,35 @@ class JadwalPeriksaController extends Controller
 
     public function update(Request $req, $id)
     {
+        if ($req->filled('jam_mulai')) {
+            $req->merge(['jam_mulai' => $req->jam_mulai . ':00']);
+        }
+
+        if ($req->filled('jam_selesai')) {
+            $req->merge(['jam_selesai' => $req->jam_selesai . ':00']);
+        }
+
         $req->validate([
             'hari' => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_mulai' => 'required|date_format:H:i',
-            'jam_selesai' => 'required|date_format:H:i',
+            'jam_mulai' => 'nullable|date_format:H:i:s',
+            'jam_selesai' => 'nullable|date_format:H:i:s',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 
         $jadwal = JadwalPeriksa::where('id_dokter', Auth::id())->findOrFail($id);
-        $jadwal->update([
-            'hari' => $req->hari,
-            'jam_mulai' => $req->jam_mulai,
-            'jam_selesai' => $req->jam_selesai,
-            'status' => $req->status,
-        ]);
+
+        $jadwal->hari = $req->hari;
+        $jadwal->status = $req->status;
+
+        if ($req->filled('jam_mulai')) {
+            $jadwal->jam_mulai = $req->jam_mulai;
+        }
+
+        if ($req->filled('jam_selesai')) {
+            $jadwal->jam_selesai = $req->jam_selesai;
+        }
+
+        $jadwal->save();
 
         return redirect('/dokter/jadwal_periksa')->with('success', 'Jadwal berhasil diperbarui.');
     }
