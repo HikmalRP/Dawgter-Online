@@ -82,7 +82,7 @@
 
                     <div class="form-group">
                         <label for="jam_selesai">Jam Selesai</label>
-                        <input type="time" name="jam_selesai" id="jam_selesai" class="form-control" value="{{ \Carbon\Carbon::parse($jadwal_periksa->jam_mulai)->format('H:i') }}">
+                        <input type="time" name="jam_selesai" id="jam_selesai" class="form-control" value="{{ \Carbon\Carbon::parse($jadwal_periksa->jam_selesai)->format('H:i') }}">
                     </div>
 
                     <div class="form-group">
