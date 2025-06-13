@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DaftarPoliController;
 use App\Http\Controllers\JadwalPeriksaController;
 use App\Http\Controllers\KelolaDokterController;
 use App\Http\Controllers\KelolaPasienController;
@@ -88,6 +89,7 @@ Route::get('/pasien/dashboard', function () {
     return view('pasien.index');
 })->name('pasien.dashboard')->middleware('role:pasien', 'auth');
 
-Route::get('/pasien/periksa', [PeriksaController::class, 'index'])->middleware('role:pasien', 'auth');
-//Route::get('/pasien/periksa/create', [PeriksaController::class, 'create'])->middleware('role:pasien', 'auth');
-Route::post('/pasien/periksa', [PeriksaController::class, 'store'])->middleware('role:pasien', 'auth');
+Route::get('/pasien/daftar_poli', [DaftarPoliController::class, 'index'])->middleware('role:pasien', 'auth');
+Route::post('/pasien/daftar_poli', [DaftarPoliController::class, 'store'])->middleware('role:pasien', 'auth');
+// Tambahan untuk dropdown jadwal dinamis berdasarkan poli
+Route::get('/get-jadwal-by-poli', [DaftarPoliController::class, 'getJadwalByPoli'])->middleware('role:pasien', 'auth');
