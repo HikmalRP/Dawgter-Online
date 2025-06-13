@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\JadwalPeriksa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class JadwalPeriksaController extends Controller
 {
@@ -22,24 +24,43 @@ class JadwalPeriksaController extends Controller
 
     public function store(Request $req)
     {
-        // Ubah input menjadi format H:i:s
+        // Tambahkan detik
         $req->merge([
             'jam_mulai' => $req->jam_mulai . ':00',
             'jam_selesai' => $req->jam_selesai . ':00',
         ]);
 
         $req->validate([
-            'hari' => 'required|string',
+            'hari' => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
             'jam_mulai' => 'required|date_format:H:i:s',
             'jam_selesai' => 'required|date_format:H:i:s',
         ]);
 
+        $dokterId = Auth::id();
+
+        // Cek tabrakan jadwal
+        $bentrok = JadwalPeriksa::where('id_dokter', $dokterId)
+            ->where('hari', $req->hari)
+            ->where(function ($query) use ($req) {
+                $query->whereBetween('jam_mulai', [$req->jam_mulai, $req->jam_selesai])
+                    ->orWhereBetween('jam_selesai', [$req->jam_mulai, $req->jam_selesai])
+                    ->orWhere(function ($q) use ($req) {
+                        $q->where('jam_mulai', '<=', $req->jam_mulai)
+                            ->where('jam_selesai', '>=', $req->jam_selesai);
+                    });
+            })->exists();
+
+        if ($bentrok) {
+            return back()->withErrors(['Jadwal bentrok dengan jadwal lain yang sudah ada.'])->withInput();
+        }
+
+        // Simpan
         JadwalPeriksa::create([
-            'id_dokter' => Auth::id(),
+            'id_dokter' => $dokterId,
             'hari' => $req->hari,
             'jam_mulai' => $req->jam_mulai,
             'jam_selesai' => $req->jam_selesai,
-            'status' => 'tidak aktif', // default status
+            'status' => 'tidak aktif',
         ]);
 
         return redirect('/dokter/jadwal_periksa')->with('success', 'Jadwal berhasil ditambahkan.');
@@ -53,6 +74,8 @@ class JadwalPeriksaController extends Controller
 
     public function update(Request $req, $id)
     {
+        $jadwal = JadwalPeriksa::where('id_dokter', Auth::id())->findOrFail($id);
+
         if ($req->filled('jam_mulai')) {
             $req->merge(['jam_mulai' => $req->jam_mulai . ':00']);
         }
@@ -68,7 +91,25 @@ class JadwalPeriksaController extends Controller
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 
-        $jadwal = JadwalPeriksa::where('id_dokter', Auth::id())->findOrFail($id);
+        // Cek apakah hari ini adalah hari jadwal
+        $today = now()->locale('id')->isoFormat('dddd'); // e.g. "Senin"
+        if ($today == $jadwal->hari) {
+            // Tidak boleh ubah hari atau jam
+            if (
+                $req->hari != $jadwal->hari ||
+                ($req->filled('jam_mulai') && $req->jam_mulai !== $jadwal->jam_mulai) ||
+                ($req->filled('jam_selesai') && $req->jam_selesai !== $jadwal->jam_selesai)
+            ) {
+                return back()->withErrors(['Jadwal pada hari ini tidak dapat diubah.'])->withInput();
+            }
+        }
+
+        // Jika ingin ubah ke status aktif, matikan yang lain
+        if ($req->status === 'aktif') {
+            JadwalPeriksa::where('id_dokter', Auth::id())
+                ->where('id', '!=', $jadwal->id)
+                ->update(['status' => 'tidak aktif']);
+        }
 
         $jadwal->hari = $req->hari;
         $jadwal->status = $req->status;
