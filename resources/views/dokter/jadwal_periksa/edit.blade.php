@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Memeriksa')
+@section('title', 'Edit Jadwal Periksa')
 
 @section('nav-item')
 <li class="nav-item">

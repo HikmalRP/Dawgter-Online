@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title','Memeriksa')
+@section('title','Jadwal Periksa')
 
 @section('nav-item')
 <li class="nav-item">

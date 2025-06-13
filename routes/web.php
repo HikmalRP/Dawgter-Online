@@ -8,6 +8,7 @@ use App\Http\Controllers\KelolaPoliController;
 use App\Http\Controllers\MemeriksaController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PeriksaController;
+use App\Http\Controllers\ProfilDokterController;
 use Illuminate\Support\Facades\Route;
 
 // Route Menu Utama
@@ -78,6 +79,9 @@ Route::post('/dokter/obat', [ObatController::class, 'store'])->middleware('role:
 Route::get('/dokter/obat/{id}/edit', [ObatController::class, 'edit'])->middleware('role:dokter', 'auth');
 Route::put('/dokter/obat/{id}', [ObatController::class, 'update'])->middleware('role:dokter', 'auth');
 Route::delete('/dokter/obat/{id}', [ObatController::class, 'destroy'])->middleware('role:dokter', 'auth');
+
+Route::get('/dokter/profil', [ProfilDokterController::class, 'edit'])->middleware('role:dokter', 'auth');
+Route::put('/dokter/profil', [ProfilDokterController::class, 'update'])->middleware('role:dokter', 'auth');
 
 // Route Pasien
 Route::get('/pasien/dashboard', function () {
