@@ -76,4 +76,29 @@ class DaftarPoliController extends Controller
 
         return response()->json($jadwals);
     }
+    public function detail($id)
+    {
+        $daftar_poli = DaftarPoli::with('jadwal.dokter.poli')
+            ->where('id', $id)
+            ->where('id_pasien', Auth::id())
+            ->firstOrFail();
+
+        return view('pasien.daftar_poli.detail_daftar_poli', compact('daftar_poli'));
+    }
+
+    public function riwayat($id)
+    {
+        $daftar_poli = DaftarPoli::with([
+            'jadwal.dokter.poli',
+            'periksa.detail_periksa_periksa.obat'
+        ])
+            ->where('id', $id)
+            ->where('id_pasien', Auth::id())
+            ->firstOrFail();
+
+        $periksa = $daftar_poli->periksa->first(); // Karena relasi hasMany
+        $detail_obat = $periksa ? $periksa->detail_periksa_periksa : collect();
+
+        return view('pasien.daftar_poli.riwayat_daftar_poli', compact('daftar_poli', 'periksa', 'detail_obat'));
+    }
 }

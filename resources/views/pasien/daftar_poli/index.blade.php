@@ -122,17 +122,23 @@
                   <td>{{$daftar_poli->jadwal->jam_selesai}}</td>
                   <td>{{$daftar_poli->no_antrian}}</td>
                   <td>
-                    @if ($daftar_poli->tgl_periksa)
-                    <span class="badge badge-success">Sudah Diperiksa</span>
-                    @else
+                    @php
+                    $periksa = $daftar_poli->periksa->first();
+                    @endphp
+                    @if (is_null($periksa))
                     <span class="badge badge-warning">Belum Diperiksa</span>
+                    @else
+                    <span class="badge badge-success">Sudah Diperiksa</span>
                     @endif
                   </td>
                   <td>
-                    @if (is_null($daftar_poli->tgl_periksa))
-                    <a href="/pasien/#" class="btn btn-primary btn-sm">Detail</a>
+                    @php
+                    $periksa = $daftar_poli->periksa->first();
+                    @endphp
+                    @if (is_null($periksa))
+                    <a href="{{ url('/pasien/daftar_poli/detail_daftar_poli/' . $daftar_poli->id) }}" class="btn btn-primary btn-sm">Detail</a>
                     @else
-                    <a href="/dokter/#" class="btn btn-warning btn-sm">Riwayat</a>
+                    <a href="{{ url('/pasien/daftar_poli/riwayat_daftar_poli/' . $daftar_poli->id) }}" class="btn btn-success btn-sm">Riwayat</a>
                     @endif
                   </td>
                 </tr>

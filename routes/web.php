@@ -8,8 +8,8 @@ use App\Http\Controllers\KelolaPasienController;
 use App\Http\Controllers\KelolaPoliController;
 use App\Http\Controllers\MemeriksaController;
 use App\Http\Controllers\ObatController;
-use App\Http\Controllers\PeriksaController;
 use App\Http\Controllers\ProfilDokterController;
+use App\Http\Controllers\RiwayatPasienController;
 use Illuminate\Support\Facades\Route;
 
 // Route Menu Utama
@@ -74,12 +74,7 @@ Route::post('/dokter/memeriksa', [MemeriksaController::class, 'store'])->middlew
 Route::get('/dokter/memeriksa/{id}/edit', [MemeriksaController::class, 'edit'])->middleware('role:dokter', 'auth');
 Route::put('/dokter/memeriksa/{id}', [MemeriksaController::class, 'update'])->middleware('role:dokter', 'auth');
 
-Route::get('/dokter/obat', [ObatController::class, 'index'])->middleware('role:dokter', 'auth');
-Route::get('/dokter/obat/create', [ObatController::class, 'create'])->middleware('role:dokter', 'auth');
-Route::post('/dokter/obat', [ObatController::class, 'store'])->middleware('role:dokter', 'auth');
-Route::get('/dokter/obat/{id}/edit', [ObatController::class, 'edit'])->middleware('role:dokter', 'auth');
-Route::put('/dokter/obat/{id}', [ObatController::class, 'update'])->middleware('role:dokter', 'auth');
-Route::delete('/dokter/obat/{id}', [ObatController::class, 'destroy'])->middleware('role:dokter', 'auth');
+Route::get('/dokter/riwayat_pasien', [RiwayatPasienController::class, 'index'])->middleware('role:dokter', 'auth');
 
 Route::get('/dokter/profil', [ProfilDokterController::class, 'edit'])->middleware('role:dokter', 'auth');
 Route::put('/dokter/profil', [ProfilDokterController::class, 'update'])->middleware('role:dokter', 'auth');
@@ -93,3 +88,5 @@ Route::get('/pasien/daftar_poli', [DaftarPoliController::class, 'index'])->middl
 Route::post('/pasien/daftar_poli', [DaftarPoliController::class, 'store'])->middleware('role:pasien', 'auth');
 // Tambahan untuk dropdown jadwal dinamis berdasarkan poli
 Route::get('/get-jadwal-by-poli', [DaftarPoliController::class, 'getJadwalByPoli'])->middleware('role:pasien', 'auth');
+Route::get('/pasien/daftar_poli/detail_daftar_poli/{id}', [DaftarPoliController::class, 'detail'])->middleware(['auth', 'role:pasien']);
+Route::get('/pasien/daftar_poli/riwayat_daftar_poli/{id}', [DaftarPoliController::class, 'riwayat'])->middleware(['auth', 'role:pasien']);

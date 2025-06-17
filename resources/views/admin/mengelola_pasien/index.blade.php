@@ -97,8 +97,8 @@
                   <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $pasien->alamat }}">
                     {{ $pasien->alamat }}
                   </td>
-                  <td>{{$pasien->no_hp}}</td>
                   <td>{{$pasien->no_ktp}}</td>
+                  <td>{{$pasien->no_hp}}</td>
                   <td>{{$pasien->no_rm}}</td>
                   <td>
                     <div class="row">
