@@ -49,7 +49,8 @@ class DaftarPoliController extends Controller
             'no_antrian' => $noAntrian,
         ]);
 
-        return redirect()->back()->with('success', 'Berhasil mendaftar ke poli.');
+        toastr()->success('Berhasil mendaftar ke poli.');
+        return redirect()->back();
     }
 
     // Digunakan oleh AJAX untuk mengisi jadwal berdasarkan poli

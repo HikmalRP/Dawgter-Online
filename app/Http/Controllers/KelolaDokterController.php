@@ -47,7 +47,8 @@ class KelolaDokterController extends Controller
             'password' => Hash::make($req->password),
         ]);
 
-        return redirect('/admin/mengelola_dokter')->with('success', 'Dokter berhasil ditambahkan');
+        toastr()->success('Dokter berhasil ditambahkan');
+        return redirect('/admin/mengelola_dokter');
     }
 
     public function edit($id)
@@ -88,12 +89,14 @@ class KelolaDokterController extends Controller
 
         $dokter->save();
 
-        return redirect('/admin/mengelola_dokter')->with('success', 'Dokter berhasil diubah');
+        toastr()->success('Dokter berhasil diperbarui');
+        return redirect('/admin/mengelola_dokter');
     }
 
     public function destroy($id)
     {
         User::findOrFail($id)->delete();
-        return redirect('/admin/mengelola_dokter')->with('success', 'Dokter berhasil dihapus');
+        toastr()->success('Dokter berhasil dihapus');
+        return redirect('/admin/mengelola_dokter');
     }
 }

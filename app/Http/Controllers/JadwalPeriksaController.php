@@ -63,7 +63,8 @@ class JadwalPeriksaController extends Controller
             'status' => 'tidak aktif',
         ]);
 
-        return redirect('/dokter/jadwal_periksa')->with('success', 'Jadwal berhasil ditambahkan.');
+        toastr()->success('Jadwal berhasil ditambahkan.');
+        return redirect('/dokter/jadwal_periksa');
     }
 
     public function edit($id)
@@ -124,6 +125,7 @@ class JadwalPeriksaController extends Controller
 
         $jadwal->save();
 
-        return redirect('/dokter/jadwal_periksa')->with('success', 'Jadwal berhasil diperbarui.');
+        toastr()->success('Jadwal berhasil diperbarui.');
+        return redirect('/dokter/jadwal_periksa');
     }
 }

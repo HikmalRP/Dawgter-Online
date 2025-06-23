@@ -26,7 +26,8 @@ class KelolaPoliController extends Controller
 
         Poli::create($req->all());
 
-        return redirect('/admin/mengelola_poli')->with('success', 'Poli berhasil ditambahkan');
+        toastr()->success('Poli berhasil ditambahkan');
+        return redirect('/admin/mengelola_poli');
     }
     public function edit($id)
     {
@@ -43,12 +44,13 @@ class KelolaPoliController extends Controller
 
         Poli::find($id)->update($req->all());
 
-        return redirect('/admin/mengelola_poli')->with('success', 'Poli berhasil diubah');
+        toastr()->success('Poli berhasil diperbarui');
+        return redirect('/admin/mengelola_poli');
     }
     public function destroy($id)
     {
         Poli::find($id)->delete();
-
-        return redirect('/admin/mengelola_poli')->with('success', 'Poli berhasil dihapus');
+        toastr()->success('Poli berhasil dihapus');
+        return redirect('/admin/mengelola_poli');
     }
 }

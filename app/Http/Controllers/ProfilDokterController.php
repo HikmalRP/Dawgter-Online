@@ -28,6 +28,7 @@ class ProfilDokterController extends Controller
         $dokter->no_hp = $request->no_hp;
         $dokter->save(); // Simpan perubahan ke database
 
-        return redirect('/dokter/profil')->with('success', 'Profil berhasil diperbarui');
+        toastr()->success('Profil berhasil diperbarui');
+        return redirect('/dokter/profil');
     }
 }

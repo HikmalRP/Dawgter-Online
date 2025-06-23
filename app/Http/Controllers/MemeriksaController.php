@@ -91,7 +91,8 @@ class MemeriksaController extends Controller
             }
         }
 
-        return redirect('/dokter/memeriksa')->with('success', 'Data periksa berhasil disimpan.');
+        toastr()->success('Data periksa berhasil disimpan');
+        return redirect('/dokter/memeriksa');
     }
 
     public function update(Request $req)
@@ -125,8 +126,8 @@ class MemeriksaController extends Controller
                 ]);
             }
         }
-
-        return redirect('dokter/memeriksa')->with('success', 'Data pemeriksaan berhasil disimpan');
+        toastr()->success('Data periksa berhasil diperbarui');
+        return redirect('dokter/memeriksa');
     }
     public function edit($id)
     {

@@ -27,6 +27,46 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('lte\plugins/summernote/summernote-bs4.min.css')}}">
   @stack('styles')
+  <style>
+    .main-sidebar {
+      background-color: #007bff !important;
+    }
+
+    .main-sidebar .nav-link,
+    .main-sidebar .brand-text,
+    .main-sidebar .user-panel .info a,
+    .main-sidebar .nav-link p,
+    .main-sidebar .nav-icon {
+      color: white !important;
+    }
+
+    .main-sidebar .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      color: #ffffff !important;
+    }
+
+    .main-sidebar .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+    }
+
+    .sidebar-search-results {
+      background-color: black !important;
+      color: white !important;
+    }
+
+    .sidebar-search-results .list-group-item {
+      background-color: black !important;
+      color: white !important;
+      border: none;
+    }
+
+    .sidebar-search-results .list-group-item:hover {
+      background-color: lightgray !important;
+      color: black !important;
+    }
+  </style>
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -81,18 +121,6 @@
           </div>
           <div class="info">
             <a href="#" class="d-block">{{$user->nama}}</a>
-          </div>
-        </div>
-
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-          <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-sidebar">
-                <i class="fas fa-search fa-fw"></i>
-              </button>
-            </div>
           </div>
         </div>
 

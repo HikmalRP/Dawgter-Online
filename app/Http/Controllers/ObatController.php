@@ -27,8 +27,8 @@ class ObatController extends Controller
         ]);
 
         Obat::create($req->all());
-
-        return redirect('/admin/obat')->with('success', 'Obat berhasil ditambahkan');
+        toastr()->success('Obat berhasil ditambahkan');
+        return redirect('/admin/obat');
     }
     public function edit($id)
     {
@@ -45,13 +45,13 @@ class ObatController extends Controller
         ]);
 
         Obat::find($id)->update($req->all());
-
-        return redirect('/admin/obat')->with('success', 'Obat berhasil diubah');
+        toastr()->success('Obat berhasil diperbarui');
+        return redirect('/admin/obat');
     }
     public function destroy($id)
     {
         Obat::find($id)->delete();
-
-        return redirect('/admin/obat')->with('success', 'Obat berhasil dihapus');
+        toastr()->success('Obat berhasil dihapus');
+        return redirect('/admin/obat');
     }
 }

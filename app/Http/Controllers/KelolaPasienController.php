@@ -69,8 +69,8 @@ class KelolaPasienController extends Controller
             'email' => $req->email,
             'password' => Hash::make($req->password),
         ]);
-
-        return redirect('/admin/mengelola_pasien')->with('success', 'Pasien berhasil ditambahkan');
+        toastr()->success('Pasien berhasil ditambahkan');
+        return redirect('/admin/mengelola_pasien');
     }
 
     public function edit($id)
@@ -117,12 +117,14 @@ class KelolaPasienController extends Controller
 
         $pasien->save();
 
-        return redirect('/admin/mengelola_pasien')->with('success', 'Pasien berhasil diubah');
+        toastr()->success('Pasien berhasil diperbarui');
+        return redirect('/admin/mengelola_pasien');
     }
 
     public function destroy($id)
     {
         User::findOrFail($id)->delete();
-        return redirect('/admin/mengelola_pasien')->with('success', 'Pasien berhasil dihapus');
+        toastr()->success('Pasien berhasil dihapus');
+        return redirect('/admin/mengelola_pasien');
     }
 }
