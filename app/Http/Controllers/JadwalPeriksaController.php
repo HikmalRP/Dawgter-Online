@@ -51,7 +51,8 @@ class JadwalPeriksaController extends Controller
             })->exists();
 
         if ($bentrok) {
-            return back()->withErrors(['Jadwal bentrok dengan jadwal lain yang sudah ada.'])->withInput();
+            toastr()->error('Jadwal bentrok dengan jadwal lain yang sudah ada.');
+            return back()->withInput();
         }
 
         // Simpan
@@ -101,7 +102,8 @@ class JadwalPeriksaController extends Controller
                 ($req->filled('jam_mulai') && $req->jam_mulai !== $jadwal->jam_mulai) ||
                 ($req->filled('jam_selesai') && $req->jam_selesai !== $jadwal->jam_selesai)
             ) {
-                return back()->withErrors(['Jadwal pada hari ini tidak dapat diubah.'])->withInput();
+                toastr()->error('Jadwal pada hari ini tidak dapat diubah.');
+                return back()->withInput();
             }
         }
 
